@@ -1,0 +1,564 @@
+﻿{
+    "items":  [
+                  {
+                      "index":  1,
+                      "title":  "社群貼文圖片",
+                      "prompt":  "生成一張適合 Instagram 的社群貼文圖，主題是日常療癒生活。請使用柔和奶油色、自然留白與溫暖光線，畫面適合搭配短文。",
+                      "file":  "prompt_01.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  2,
+                      "title":  "YouTube 縮圖",
+                      "prompt":  "設計一張資訊型 YouTube 縮圖，主題是 AI 提升工作效率。請使用醒目標題、強對比配色與科技感背景，手機小尺寸也要清楚。",
+                      "file":  "prompt_02.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  3,
+                      "title":  "商品形象照",
+                      "prompt":  "把指定產品轉成高質感商品攝影視覺。請使用乾淨背景、柔和自然光、簡約構圖與細緻陰影，呈現保養品牌官網的精緻感。",
+                      "file":  "prompt_03.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  4,
+                      "title":  "EDM 主視覺",
+                      "prompt":  "設計一張品牌電子報主圖，主題是會員限定優惠。畫面要乾淨、吸睛、有明確主標與行動感，適合放在 EDM 首屏。",
+                      "file":  "prompt_04.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  5,
+                      "title":  "吉祥物商品化",
+                      "prompt":  "把角色轉成品牌吉祥物商品展示圖。請製作成絨毛玩偶風格，畫面溫暖可愛，像文創品牌商品頁的主視覺。",
+                      "file":  "prompt_05.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  6,
+                      "title":  "活動海報",
+                      "prompt":  "製作一張科技論壇活動海報。請使用深色高級配色、現代字體、清楚活動資訊區塊與專業感排版。",
+                      "file":  "prompt_06.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  7,
+                      "title":  "社群輪播封面",
+                      "prompt":  "設計一張 Instagram 輪播封面，主題是 AI 工具推薦。請使用簡潔版面、現代字體與清楚的封面標題。",
+                      "file":  "prompt_07.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  8,
+                      "title":  "教學資訊圖",
+                      "prompt":  "把 AI 工具使用方法整理成教學資訊圖。請加入步驟箭頭、簡單圖示與重點摘要，適合社群分享。",
+                      "file":  "prompt_08.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  9,
+                      "title":  "Logo 概念",
+                      "prompt":  "生成三款品牌 Logo 概念方向，分別呈現極簡、科技感與精品感。每款需有不同構圖與可辨識符號。",
+                      "file":  "prompt_09.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  10,
+                      "title":  "社群模板",
+                      "prompt":  "設計一套品牌社群模板，包含公告、活動、語錄與新品發布版型。請保持色彩、字體與版面節奏一致。",
+                      "file":  "prompt_10.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  11,
+                      "title":  "策略資訊圖",
+                      "prompt":  "將品牌策略整理成資訊圖表，包含定位、顧客旅程、營運、會員與成長機會。風格需像專業顧問簡報。",
+                      "file":  "prompt_11.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  12,
+                      "title":  "客戶見證卡",
+                      "prompt":  "把一段客戶好評做成社群見證卡。請放大關鍵句，加入簡潔人物資訊區與可信賴的品牌視覺。",
+                      "file":  "prompt_12.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  13,
+                      "title":  "限時優惠圖",
+                      "prompt":  "設計一張限時優惠廣告圖。請讓折扣訊息明確、主商品突出，並保留按鈕或導購文字的位置。",
+                      "file":  "prompt_13.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  14,
+                      "title":  "品牌故事圖",
+                      "prompt":  "把品牌理念轉成一張故事型視覺。請用溫暖影像感、簡短標語與低干擾背景，適合首頁或社群首圖。",
+                      "file":  "prompt_14.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  15,
+                      "title":  "簡報封面",
+                      "prompt":  "製作一張專業簡報封面，主題是新服務提案。請使用企業感配色、簡潔排版與現代曲線元素。",
+                      "file":  "prompt_15.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  16,
+                      "title":  "公司介紹圖卡",
+                      "prompt":  "把公司理念、服務項目與核心特色整理成一張介紹圖卡。版面需清楚、有層級，適合提案或官網使用。",
+                      "file":  "prompt_16.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  17,
+                      "title":  "產品比較表",
+                      "prompt":  "將多個方案做成視覺化比較表。請使用欄位、圖示與重點標記，讓差異一眼可讀。",
+                      "file":  "prompt_17.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  18,
+                      "title":  "FAQ 問答卡",
+                      "prompt":  "把常見問題與回答整理成一張問答圖卡。請讓問題醒目、答案簡短清楚，適合客服或網站說明。",
+                      "file":  "prompt_18.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  19,
+                      "title":  "App Icon",
+                      "prompt":  "設計一款現代感 App icon，以簡約幾何造型呈現主功能。請提供多個方向並說明每個方向的概念。",
+                      "file":  "prompt_19.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  20,
+                      "title":  "操作流程圖",
+                      "prompt":  "把帳號註冊流程做成步驟圖解。請使用圖示、箭頭與短句說明，畫面要現代、清楚、容易照做。",
+                      "file":  "prompt_20.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  21,
+                      "title":  "數據資訊圖",
+                      "prompt":  "將市場調查數據轉成資訊圖。請突出關鍵數字、使用清楚圖表，讓簡報觀眾快速掌握結論。",
+                      "file":  "prompt_21.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  22,
+                      "title":  "工作 Checklist",
+                      "prompt":  "設計一張活動籌備 Checklist 圖卡。請使用勾選框、分區標題與乾淨排版，適合列印或內部分享。",
+                      "file":  "prompt_22.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  23,
+                      "title":  "部落格首圖",
+                      "prompt":  "製作一張文章首圖，主題結合生活風格與工作效率。請使用柔和配色、閱讀感版面與自然元素。",
+                      "file":  "prompt_23.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  24,
+                      "title":  "社群分享卡",
+                      "prompt":  "把一句文章重點做成適合分享的卡片。請放大核心句，搭配簡潔背景與清楚來源位置。",
+                      "file":  "prompt_24.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  25,
+                      "title":  "會議摘要圖",
+                      "prompt":  "將會議結論整理成一張摘要圖。請分成決議、待辦、負責人與期限四個區塊。",
+                      "file":  "prompt_25.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  26,
+                      "title":  "年度目標圖",
+                      "prompt":  "把年度 OKR 或目標做成視覺化圖表。請用階層結構呈現目標、關鍵成果與進度。",
+                      "file":  "prompt_26.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  27,
+                      "title":  "專案時程圖",
+                      "prompt":  "把專案里程碑做成時間軸。請區分階段、日期與負責內容，適合放在簡報中。",
+                      "file":  "prompt_27.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  28,
+                      "title":  "流程 SOP",
+                      "prompt":  "將一段工作 SOP 轉成流程圖。請保留關鍵判斷點，並用清楚符號區分動作與條件。",
+                      "file":  "prompt_28.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  29,
+                      "title":  "咖啡館菜單",
+                      "prompt":  "製作一張文青風咖啡館菜單，包含飲品、甜點、價格與小插畫。請使用溫暖底色、手寫感字體與留白。",
+                      "file":  "prompt_29.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  30,
+                      "title":  "季節月曆",
+                      "prompt":  "生成一張春季主題月曆。請包含日期排版、季節花卉、柔和天空與可愛小插圖，適合手機桌布或桌曆。",
+                      "file":  "prompt_30.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  31,
+                      "title":  "旅行規劃表",
+                      "prompt":  "規劃四天三夜自由行，先整理日程表，再轉成旅遊雜誌風拼貼海報。請兼顧交通、景點、餐飲與節奏。",
+                      "file":  "prompt_31.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  32,
+                      "title":  "編織氣象圖",
+                      "prompt":  "生成一張編織材質的城市氣象圖。中央顯示天氣資訊，周圍用毛線風格呈現街道、人物與城市景觀。",
+                      "file":  "prompt_32.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  33,
+                      "title":  "讀書筆記",
+                      "prompt":  "把一張圖片或主題轉成讀書筆記風頁面。請加入手寫感標題、重點底線、便利貼區塊與清楚分類。",
+                      "file":  "prompt_33.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  34,
+                      "title":  "時間管理圖",
+                      "prompt":  "把一天 24 小時做成時間分配圖，分出工作、學習、運動、娛樂與休息。風格像效率工具介面。",
+                      "file":  "prompt_34.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  35,
+                      "title":  "美食插圖",
+                      "prompt":  "把一道料理轉成溫暖美食插圖。請突出食材、香氣與手作感，適合菜單或社群貼文。",
+                      "file":  "prompt_35.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  36,
+                      "title":  "白邊手繪風",
+                      "prompt":  "將照片轉成日系白邊手繪風。請保留主體特徵，加入紙張質感、細線筆觸與清爽留白。",
+                      "file":  "prompt_36.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  37,
+                      "title":  "習慣追蹤表",
+                      "prompt":  "設計一張一週習慣追蹤表。請加入日期、勾選欄、鼓勵短句與簡潔插圖，適合列印使用。",
+                      "file":  "prompt_37.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  38,
+                      "title":  "房間收納圖",
+                      "prompt":  "把房間收納計畫做成視覺化配置圖。請用分區、標籤與簡單圖示呈現物品位置。",
+                      "file":  "prompt_38.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  39,
+                      "title":  "購物清單圖",
+                      "prompt":  "設計一張超市購物清單圖卡。請依分類排列食材，加入可勾選欄位與簡單生活感插畫。",
+                      "file":  "prompt_39.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  40,
+                      "title":  "運動菜單表",
+                      "prompt":  "把一週運動安排做成訓練表。請區分部位、時間、強度與休息日，版面要清楚。",
+                      "file":  "prompt_40.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  41,
+                      "title":  "料理步驟圖",
+                      "prompt":  "將一道菜的做法轉成步驟式圖解。請用編號、食材小圖與短句說明，適合新手照做。",
+                      "file":  "prompt_41.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  42,
+                      "title":  "居家植物照護",
+                      "prompt":  "製作一張植物照護卡，包含澆水、光照、溫度與注意事項。視覺要清新、好讀。",
+                      "file":  "prompt_42.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  43,
+                      "title":  "生日邀請卡",
+                      "prompt":  "設計一張生日聚會邀請卡。請保留日期、地點、主題與 RSVP 位置，風格溫暖有儀式感。",
+                      "file":  "prompt_43.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  44,
+                      "title":  "四格漫畫",
+                      "prompt":  "把每天開會的崩潰日常畫成四格漫畫。角色要可愛，節奏輕鬆，最後一格有幽默反轉。",
+                      "file":  "prompt_44.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  45,
+                      "title":  "LINE 貼圖",
+                      "prompt":  "設計一組 Q 版聊天貼圖角色，包含開心、無奈、生氣、驚訝等表情。線條要乾淨，辨識度高。",
+                      "file":  "prompt_45.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  46,
+                      "title":  "旅行日記",
+                      "prompt":  "生成一頁旅行日記插畫，包含地圖、車票、手寫字與沿途風景，像旅人筆記本內頁。",
+                      "file":  "prompt_46.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  47,
+                      "title":  "黑膠封面",
+                      "prompt":  "設計一張獨立樂團黑膠唱片封面。請使用低飽和色調、情緒感構圖與文藝攝影氛圍。",
+                      "file":  "prompt_47.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  48,
+                      "title":  "漫畫封面",
+                      "prompt":  "製作一張冒險漫畫封面。主角站在壯闊場景前，加入標題區、集數編號與強烈動態構圖。",
+                      "file":  "prompt_48.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  49,
+                      "title":  "奇幻書封",
+                      "prompt":  "生成一本奇幻小說封面。畫面包含古城、夜空與神秘角色，呈現有故事張力的出版設計。",
+                      "file":  "prompt_49.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  50,
+                      "title":  "復古雜誌",
+                      "prompt":  "設計一張 90 年代生活風格雜誌封面。請使用大標題、復古照片排版與鮮明流行色。",
+                      "file":  "prompt_50.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  51,
+                      "title":  "時尚雜誌",
+                      "prompt":  "製作一張日系都會時尚雜誌封面。人物穿著簡約高級，背景是城市街景，排版要像真實雜誌。",
+                      "file":  "prompt_51.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  52,
+                      "title":  "寵物拍照框",
+                      "prompt":  "讓寵物像從社群照片框走出來。請保留可愛表情，加入立體陰影與有趣的互動姿勢。",
+                      "file":  "prompt_52.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  53,
+                      "title":  "黏土 Q 版",
+                      "prompt":  "把角色轉成黏土 Q 版模型。請使用柔軟材質、圓潤比例與玩具展示台視覺。",
+                      "file":  "prompt_53.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  54,
+                      "title":  "精選動態封面",
+                      "prompt":  "設計一組 IG 精選動態封面。請使用統一線條圖示、品牌色與簡潔背景。",
+                      "file":  "prompt_54.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  55,
+                      "title":  "扭蛋包裝",
+                      "prompt":  "把角色設計成扭蛋商品包裝。請包含透明膠囊、玩具感標籤與日系陳列視覺。",
+                      "file":  "prompt_55.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  56,
+                      "title":  "桌遊卡牌",
+                      "prompt":  "把角色做成桌遊卡牌。請包含角色名、能力值、技能說明與精緻邊框。",
+                      "file":  "prompt_56.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  57,
+                      "title":  "貼紙包",
+                      "prompt":  "設計一組手帳貼紙。請包含表情、物品、小標籤與可愛裝飾元素，風格一致。",
+                      "file":  "prompt_57.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  58,
+                      "title":  "動畫分鏡",
+                      "prompt":  "把一段短故事畫成六格動畫分鏡。請標示鏡頭角度、角色動作與情緒變化。",
+                      "file":  "prompt_58.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  59,
+                      "title":  "突破手機螢幕",
+                      "prompt":  "以人物照片為基礎，生成一個人物從手機社群貼文中走向現實的電影感場景。請強化 3D 透視與空間深度。",
+                      "file":  "prompt_59.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  60,
+                      "title":  "潑墨插畫",
+                      "prompt":  "把人物照片轉成日系手繪潑墨插圖。請保留臉部特徵，使用鬆散墨線、水彩筆觸與草稿感質地。",
+                      "file":  "prompt_60.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  61,
+                      "title":  "角色設定海報",
+                      "prompt":  "根據照片生成角色設定海報。請保留人物氣質，改成寫實插畫風，加入服裝、表情與設定說明區。",
+                      "file":  "prompt_61.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  62,
+                      "title":  "穿搭分析",
+                      "prompt":  "根據人物照片生成穿搭解析海報。請依臉型、膚色、比例與氣質提出個人化風格，不使用通用分類。",
+                      "file":  "prompt_62.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  63,
+                      "title":  "電子寵物像素",
+                      "prompt":  "把照片轉成 90 年代電子寵物機畫面。請用低解析像素、液晶螢幕質感與可愛互動場景呈現。",
+                      "file":  "prompt_63.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  64,
+                      "title":  "Q 版 3D 小人",
+                      "prompt":  "以照片人物為中心，生成多個迷你分身在周圍活動的合成圖。風格可愛、有故事感，適合社群分享。",
+                      "file":  "prompt_64.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  65,
+                      "title":  "電影海報",
+                      "prompt":  "把人物照片轉成電影海報。請加入片名區、戲劇化光影、角色站位與院線海報質感。",
+                      "file":  "prompt_65.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  66,
+                      "title":  "巨大與迷你人物",
+                      "prompt":  "用同一人物照片生成巨大版與迷你版互動場景。請讓比例差異明顯，動作自然有趣。",
+                      "file":  "prompt_66.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  67,
+                      "title":  "極道風角色",
+                      "prompt":  "把人物轉成日劇風格的高張力角色照。請使用正式服裝、街頭夜景、強烈光影與戲劇感構圖。",
+                      "file":  "prompt_67.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  68,
+                      "title":  "Y2K 大頭貼",
+                      "prompt":  "把人物照片轉成 Y2K 四格大頭貼。請加入亮片、貼紙、閃光字與復古拍貼機色彩。",
+                      "file":  "prompt_68.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  69,
+                      "title":  "蠟筆手繪",
+                      "prompt":  "將照片改成蠟筆手繪風。請保留輪廓與表情，用粗糙紙張紋理、柔和顏色與童趣筆觸呈現。",
+                      "file":  "prompt_69.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  70,
+                      "title":  "小畫家風",
+                      "prompt":  "把照片轉成早期電腦小畫家風。請使用簡單色塊、粗線條、平面陰影與隨興手繪感。",
+                      "file":  "prompt_70.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  71,
+                      "title":  "手機桌布",
+                      "prompt":  "把大頭照設計成手機桌布。請保留臉部焦點，加入乾淨背景、日期小元件與留白區。",
+                      "file":  "prompt_71.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  72,
+                      "title":  "浮雕徽章",
+                      "prompt":  "把風景照片轉成浮雕徽章。請使用圓形構圖、立體邊框、金屬或陶土材質與地標細節。",
+                      "file":  "prompt_72.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  73,
+                      "title":  "手作紙雕",
+                      "prompt":  "把照片轉成手作紙雕場景。請使用分層紙張、柔和陰影與精緻剪紙邊緣。",
+                      "file":  "prompt_73.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  74,
+                      "title":  "地球小行星",
+                      "prompt":  "把風景或城市照片轉成小行星世界。請讓地面環成球形，人物與建築沿著星球自然排列。",
+                      "file":  "prompt_74.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  75,
+                      "title":  "遊戲像素",
+                      "prompt":  "把照片轉成復古電玩像素畫。請保留人物姿態與場景，加入 16-bit 色彩、遊戲介面與可玩感。",
+                      "file":  "prompt_75.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  76,
+                      "title":  "塔羅牌",
+                      "prompt":  "把人物照片轉成塔羅牌插畫。請加入象徵元素、牌名、精緻邊框與神秘色彩。",
+                      "file":  "prompt_76.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  77,
+                      "title":  "賽車現場",
+                      "prompt":  "把人物合成到 F1 賽車現場。請加入賽道、維修區、速度感背景與真實運動攝影光線。",
+                      "file":  "prompt_77.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  78,
+                      "title":  "籃球現場",
+                      "prompt":  "把人物合成到 NBA 球賽現場。請加入球場燈光、觀眾席、動態姿勢與體育攝影質感。",
+                      "file":  "prompt_78.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  79,
+                      "title":  "棒球現場",
+                      "prompt":  "把人物合成到職棒比賽現場。請加入球場草皮、看台、隊服元素與比賽瞬間氛圍。",
+                      "file":  "prompt_79.png",
+                      "status":  "done"
+                  },
+                  {
+                      "index":  80,
+                      "title":  "偶像舞台",
+                      "prompt":  "把人物合成到偶像打歌舞台。請加入舞台燈、LED 背景、表演姿勢與高解析舞台攝影感。",
+                      "file":  "prompt_80.png",
+                      "status":  "done"
+                  }
+              ]
+}

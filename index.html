@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>圖像提示詞平台</title>
+  <style>
+    :root {
+      --bg: #f7f8f3;
+      --ink: #20231f;
+      --muted: #6d746b;
+      --line: #dfe3d8;
+      --panel: #ffffff;
+      --accent: #35675f;
+      --accent-2: #b85f45;
+      --soft: #edf3ee;
+      --shadow: 0 12px 30px rgba(31, 47, 42, .09);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      letter-spacing: 0;
+    }
+
+    button, input { font: inherit; }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 28px 22px;
+      border-right: 1px solid var(--line);
+      background: #fbfcf8;
+      overflow: auto;
+    }
+
+    main {
+      padding: 30px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 28px;
+      line-height: 1.2;
+    }
+
+    .source {
+      margin: 0 0 22px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .source a { color: var(--accent); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 22px 0;
+    }
+
+    .stat {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      color: var(--accent);
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .search {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(53, 103, 95, .14);
+    }
+
+    .tabs {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tab {
+      min-height: 42px;
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      border-color: var(--accent);
+      background: var(--soft);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .primary,
+    .copy {
+      min-height: 40px;
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    .primary.secondary {
+      background: var(--accent-2);
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .toolbar h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .count {
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      min-height: 250px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .preview {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      margin-bottom: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--soft);
+    }
+
+    .preview img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .tag {
+      flex: 0 0 auto;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--accent);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .prompt {
+      flex: 1;
+      margin: 0 0 16px;
+      color: #33382f;
+      line-height: 1.72;
+      font-size: 15px;
+    }
+
+    .copy {
+      align-self: flex-start;
+      min-width: 110px;
+      padding: 8px 12px;
+    }
+
+    .copy.done,
+    .primary.done {
+      background: #4a7b4f;
+    }
+
+    .empty {
+      display: none;
+      padding: 30px;
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      color: var(--muted);
+      background: var(--panel);
+      text-align: center;
+    }
+
+    .signature {
+      position: fixed;
+      right: 18px;
+      bottom: 14px;
+      z-index: 10;
+      padding: 7px 10px;
+      border: 1px solid rgba(223, 227, 216, .9);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .82);
+      box-shadow: 0 8px 22px rgba(31, 47, 42, .12);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
+      background-clip: padding-box;
+      backdrop-filter: blur(8px);
+    }
+
+    .signature span {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), #c59a32, #3f7e9a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    @media (max-width: 820px) {
+      .app { grid-template-columns: 1fr; }
+      aside {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      main { padding: 22px; }
+      .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .toolbar { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (max-width: 520px) {
+      .tabs { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <h1>圖像提示詞平台</h1>
+      <p class="source">
+        依用途分類整理的圖像提示詞模板，可搜尋、篩選並一鍵複製。參考來源：
+        <a href="https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete" target="_blank" rel="noreferrer">查看文章</a>
+      </p>
+
+      <div class="stats">
+        <div class="stat"><strong id="totalCount">0</strong>提示詞</div>
+        <div class="stat"><strong id="categoryCount">0</strong>分類</div>
+      </div>
+
+      <label for="search">搜尋用途或關鍵字</label>
+      <input id="search" class="search" type="search" placeholder="例如：簡報、菜單、貼圖">
+
+      <label>分類</label>
+      <div id="tabs" class="tabs"></div>
+
+      <div class="actions">
+        <button id="copyVisible" class="primary" type="button">複製目前結果</button>
+        <button id="clearSearch" class="primary secondary" type="button">清除搜尋</button>
+      </div>
+    </aside>
+
+    <main>
+      <div class="toolbar">
+        <h2 id="viewTitle">全部提示詞</h2>
+        <div id="resultCount" class="count"></div>
+      </div>
+      <section id="grid" class="grid"></section>
+      <div id="empty" class="empty">找不到符合條件的提示詞。</div>
+    </main>
+  </div>
+
+  <script>
+    const source = [
+      {
+        category: "品牌社群",
+        prompts: [
+          ["社群貼文圖片", "生成一張適合 Instagram 的社群貼文圖，主題是日常療癒生活。請使用柔和奶油色、自然留白與溫暖光線，畫面適合搭配短文。"],
+          ["YouTube 縮圖", "設計一張資訊型 YouTube 縮圖，主題是 AI 提升工作效率。請使用醒目標題、強對比配色與科技感背景，手機小尺寸也要清楚。"],
+          ["商品形象照", "把指定產品轉成高質感商品攝影視覺。請使用乾淨背景、柔和自然光、簡約構圖與細緻陰影，呈現保養品牌官網的精緻感。"],
+          ["EDM 主視覺", "設計一張品牌電子報主圖，主題是會員限定優惠。畫面要乾淨、吸睛、有明確主標與行動感，適合放在 EDM 首屏。"],
+          ["吉祥物商品化", "把角色轉成品牌吉祥物商品展示圖。請製作成絨毛玩偶風格，畫面溫暖可愛，像文創品牌商品頁的主視覺。"],
+          ["活動海報", "製作一張科技論壇活動海報。請使用深色高級配色、現代字體、清楚活動資訊區塊與專業感排版。"],
+          ["社群輪播封面", "設計一張 Instagram 輪播封面，主題是 AI 工具推薦。請使用簡潔版面、現代字體與清楚的封面標題。"],
+          ["教學資訊圖", "把 AI 工具使用方法整理成教學資訊圖。請加入步驟箭頭、簡單圖示與重點摘要，適合社群分享。"],
+          ["Logo 概念", "生成三款品牌 Logo 概念方向，分別呈現極簡、科技感與精品感。每款需有不同構圖與可辨識符號。"],
+          ["社群模板", "設計一套品牌社群模板，包含公告、活動、語錄與新品發布版型。請保持色彩、字體與版面節奏一致。"],
+          ["策略資訊圖", "將品牌策略整理成資訊圖表，包含定位、顧客旅程、營運、會員與成長機會。風格需像專業顧問簡報。"],
+          ["客戶見證卡", "把一段客戶好評做成社群見證卡。請放大關鍵句，加入簡潔人物資訊區與可信賴的品牌視覺。"],
+          ["限時優惠圖", "設計一張限時優惠廣告圖。請讓折扣訊息明確、主商品突出，並保留按鈕或導購文字的位置。"],
+          ["品牌故事圖", "把品牌理念轉成一張故事型視覺。請用溫暖影像感、簡短標語與低干擾背景，適合首頁或社群首圖。"],
+          ["電商主圖", "生成一張電商商品主圖。請讓產品置中突出，搭配乾淨背景、柔和陰影與高質感材質，適合放在商品頁首圖。", "81"],
+          ["情境式商品照", "把產品放進真實生活情境中。請呈現使用中的畫面、自然光線與可想像的生活場景，讓商品用途一眼清楚。", "82"],
+          ["開箱平鋪圖", "製作一張產品開箱平鋪圖。請包含外盒、配件、說明卡與主商品，構圖整齊，適合社群或電商展示。", "83"],
+          ["材質特寫", "生成一張產品材質特寫。請放大紋理、邊緣、光澤與細節，呈現高解析度微距攝影感。", "84"],
+          ["節慶促銷海報", "設計一張節慶促銷海報。請融合節慶元素、主商品、優惠視覺區與清楚行動按鈕位置，畫面熱鬧但不雜亂。", "85"],
+          ["字體海報", "設計一張以大型字體為主角的主視覺海報。請使用強烈排版節奏、幾何構圖與高辨識度色彩。", "86"],
+          ["電影感產品廣告", "把產品拍成電影感廣告畫面。請使用戲劇化光影、低角度構圖、煙霧或反射質感，讓產品像高級商業大片。", "87"],
+          ["網站 Hero 區", "設計一個網站首頁 Hero 區視覺。請包含主產品、標題留白、行動按鈕位置與沉浸式背景，適合品牌官網。", "90"],
+          ["品牌貼紙包", "設計一組品牌貼紙包。請包含口號貼紙、圖示貼紙、表情貼紙與小裝飾，整體要適合社群或包裝使用。", "96"]
+        ]
+      },
+      {
+        category: "工作應用",
+        prompts: [
+          ["簡報封面", "製作一張專業簡報封面，主題是新服務提案。請使用企業感配色、簡潔排版與現代曲線元素。"],
+          ["公司介紹圖卡", "把公司理念、服務項目與核心特色整理成一張介紹圖卡。版面需清楚、有層級，適合提案或官網使用。"],
+          ["產品比較表", "將多個方案做成視覺化比較表。請使用欄位、圖示與重點標記，讓差異一眼可讀。"],
+          ["FAQ 問答卡", "把常見問題與回答整理成一張問答圖卡。請讓問題醒目、答案簡短清楚，適合客服或網站說明。"],
+          ["App Icon", "設計一款現代感 App icon，以簡約幾何造型呈現主功能。請提供多個方向並說明每個方向的概念。"],
+          ["操作流程圖", "把帳號註冊流程做成步驟圖解。請使用圖示、箭頭與短句說明，畫面要現代、清楚、容易照做。"],
+          ["數據資訊圖", "將市場調查數據轉成資訊圖。請突出關鍵數字、使用清楚圖表，讓簡報觀眾快速掌握結論。"],
+          ["工作 Checklist", "設計一張活動籌備 Checklist 圖卡。請使用勾選框、分區標題與乾淨排版，適合列印或內部分享。"],
+          ["部落格首圖", "製作一張文章首圖，主題結合生活風格與工作效率。請使用柔和配色、閱讀感版面與自然元素。"],
+          ["社群分享卡", "把一句文章重點做成適合分享的卡片。請放大核心句，搭配簡潔背景與清楚來源位置。"],
+          ["會議摘要圖", "將會議結論整理成一張摘要圖。請分成決議、待辦、負責人與期限四個區塊。"],
+          ["年度目標圖", "把年度 OKR 或目標做成視覺化圖表。請用階層結構呈現目標、關鍵成果與進度。"],
+          ["專案時程圖", "把專案里程碑做成時間軸。請區分階段、日期與負責內容，適合放在簡報中。"],
+          ["流程 SOP", "將一段工作 SOP 轉成流程圖。請保留關鍵判斷點，並用清楚符號區分動作與條件。"],
+          ["3D Icon 組", "設計一組 3D 軟質 icon。請包含多個同風格功能圖示，使用圓潤材質、柔和陰影與一致的視覺角度。", "88"],
+          ["UI App 畫面", "設計一張現代 App 介面 mockup。請包含首頁、功能卡片、底部導覽與清楚層級，風格簡潔且可用。", "89"],
+          ["SaaS Dashboard", "生成一張 SaaS 後台儀表板畫面。請包含圖表、指標卡、側邊欄與資料表，整體專業、清楚、密度適中。", "91"],
+          ["玻璃擬態卡片", "設計一張玻璃擬態風格資訊卡。請使用半透明面板、模糊背景、柔和高光與乾淨資料區塊。", "99"]
+        ]
+      },
+      {
+        category: "生活實用",
+        prompts: [
+          ["咖啡館菜單", "製作一張文青風咖啡館菜單，包含飲品、甜點、價格與小插畫。請使用溫暖底色、手寫感字體與留白。"],
+          ["季節月曆", "生成一張春季主題月曆。請包含日期排版、季節花卉、柔和天空與可愛小插圖，適合手機桌布或桌曆。"],
+          ["旅行規劃表", "規劃四天三夜自由行，先整理日程表，再轉成旅遊雜誌風拼貼海報。請兼顧交通、景點、餐飲與節奏。"],
+          ["編織氣象圖", "生成一張編織材質的城市氣象圖。中央顯示天氣資訊，周圍用毛線風格呈現街道、人物與城市景觀。"],
+          ["讀書筆記", "把一張圖片或主題轉成讀書筆記風頁面。請加入手寫感標題、重點底線、便利貼區塊與清楚分類。"],
+          ["時間管理圖", "把一天 24 小時做成時間分配圖，分出工作、學習、運動、娛樂與休息。風格像效率工具介面。"],
+          ["美食插圖", "把一道料理轉成溫暖美食插圖。請突出食材、香氣與手作感，適合菜單或社群貼文。"],
+          ["白邊手繪風", "將照片轉成日系白邊手繪風。請保留主體特徵，加入紙張質感、細線筆觸與清爽留白。"],
+          ["習慣追蹤表", "設計一張一週習慣追蹤表。請加入日期、勾選欄、鼓勵短句與簡潔插圖，適合列印使用。"],
+          ["房間收納圖", "把房間收納計畫做成視覺化配置圖。請用分區、標籤與簡單圖示呈現物品位置。"],
+          ["購物清單圖", "設計一張超市購物清單圖卡。請依分類排列食材，加入可勾選欄位與簡單生活感插畫。"],
+          ["運動菜單表", "把一週運動安排做成訓練表。請區分部位、時間、強度與休息日，版面要清楚。"],
+          ["料理步驟圖", "將一道菜的做法轉成步驟式圖解。請用編號、食材小圖與短句說明，適合新手照做。"],
+          ["居家植物照護", "製作一張植物照護卡，包含澆水、光照、溫度與注意事項。視覺要清新、好讀。"],
+          ["生日邀請卡", "設計一張生日聚會邀請卡。請保留日期、地點、主題與 RSVP 位置，風格溫暖有儀式感。"],
+          ["室內設計提案", "把室內空間轉成設計提案圖。請呈現家具配置、材質板、色票與空間氛圍，像室內設計簡報。", "92"],
+          ["建築概念渲染", "生成一張建築概念渲染圖。請呈現建築外觀、周邊環境、日光陰影與材質細節，具有提案展示感。", "93"]
+        ]
+      },
+      {
+        category: "靈感創作",
+        prompts: [
+          ["四格漫畫", "把每天開會的崩潰日常畫成四格漫畫。角色要可愛，節奏輕鬆，最後一格有幽默反轉。"],
+          ["LINE 貼圖", "設計一組 Q 版聊天貼圖角色，包含開心、無奈、生氣、驚訝等表情。線條要乾淨，辨識度高。"],
+          ["旅行日記", "生成一頁旅行日記插畫，包含地圖、車票、手寫字與沿途風景，像旅人筆記本內頁。"],
+          ["黑膠封面", "設計一張獨立樂團黑膠唱片封面。請使用低飽和色調、情緒感構圖與文藝攝影氛圍。"],
+          ["漫畫封面", "製作一張冒險漫畫封面。主角站在壯闊場景前，加入標題區、集數編號與強烈動態構圖。"],
+          ["奇幻書封", "生成一本奇幻小說封面。畫面包含古城、夜空與神秘角色，呈現有故事張力的出版設計。"],
+          ["復古雜誌", "設計一張 90 年代生活風格雜誌封面。請使用大標題、復古照片排版與鮮明流行色。"],
+          ["時尚雜誌", "製作一張日系都會時尚雜誌封面。人物穿著簡約高級，背景是城市街景，排版要像真實雜誌。"],
+          ["寵物拍照框", "讓寵物像從社群照片框走出來。請保留可愛表情，加入立體陰影與有趣的互動姿勢。"],
+          ["黏土 Q 版", "把角色轉成黏土 Q 版模型。請使用柔軟材質、圓潤比例與玩具展示台視覺。"],
+          ["精選動態封面", "設計一組 IG 精選動態封面。請使用統一線條圖示、品牌色與簡潔背景。"],
+          ["扭蛋包裝", "把角色設計成扭蛋商品包裝。請包含透明膠囊、玩具感標籤與日系陳列視覺。"],
+          ["桌遊卡牌", "把角色做成桌遊卡牌。請包含角色名、能力值、技能說明與精緻邊框。"],
+          ["貼紙包", "設計一組手帳貼紙。請包含表情、物品、小標籤與可愛裝飾元素，風格一致。"],
+          ["動畫分鏡", "把一段短故事畫成六格動畫分鏡。請標示鏡頭角度、角色動作與情緒變化。"],
+          ["角色一致性表", "設計一張角色一致性設定表。請呈現同一角色的正面、側面、背面、表情與服裝細節，風格統一。", "94"],
+          ["IP 周邊展示", "把角色延伸成 IP 周邊商品展示。請包含吊飾、貼紙、杯子、玩偶與包裝，呈現商品系列感。", "95"],
+          ["無縫圖案", "生成一張可重複拼接的無縫圖案。請使用一致的小圖案元素、清楚間距與適合包裝或布料的配色。", "97"],
+          ["等距城市地圖", "設計一張等距城市地圖插畫。請包含道路、建築、地標、綠地與小人物，適合旅遊或活動導覽。", "98"]
+        ]
+      },
+      {
+        category: "照片轉換",
+        prompts: [
+          ["突破手機螢幕", "以人物照片為基礎，生成一個人物從手機社群貼文中走向現實的電影感場景。請強化 3D 透視與空間深度。"],
+          ["潑墨插畫", "把人物照片轉成日系手繪潑墨插圖。請保留臉部特徵，使用鬆散墨線、水彩筆觸與草稿感質地。"],
+          ["角色設定海報", "根據照片生成角色設定海報。請保留人物氣質，改成寫實插畫風，加入服裝、表情與設定說明區。"],
+          ["穿搭分析", "根據人物照片生成穿搭解析海報。請依臉型、膚色、比例與氣質提出個人化風格，不使用通用分類。"],
+          ["電子寵物像素", "把照片轉成 90 年代電子寵物機畫面。請用低解析像素、液晶螢幕質感與可愛互動場景呈現。"],
+          ["Q 版 3D 小人", "以照片人物為中心，生成多個迷你分身在周圍活動的合成圖。風格可愛、有故事感，適合社群分享。"],
+          ["電影海報", "把人物照片轉成電影海報。請加入片名區、戲劇化光影、角色站位與院線海報質感。"],
+          ["巨大與迷你人物", "用同一人物照片生成巨大版與迷你版互動場景。請讓比例差異明顯，動作自然有趣。"],
+          ["極道風角色", "把人物轉成日劇風格的高張力角色照。請使用正式服裝、街頭夜景、強烈光影與戲劇感構圖。"],
+          ["Y2K 大頭貼", "把人物照片轉成 Y2K 四格大頭貼。請加入亮片、貼紙、閃光字與復古拍貼機色彩。"],
+          ["蠟筆手繪", "將照片改成蠟筆手繪風。請保留輪廓與表情，用粗糙紙張紋理、柔和顏色與童趣筆觸呈現。"],
+          ["小畫家風", "把照片轉成早期電腦小畫家風。請使用簡單色塊、粗線條、平面陰影與隨興手繪感。"],
+          ["手機桌布", "把大頭照設計成手機桌布。請保留臉部焦點，加入乾淨背景、日期小元件與留白區。"],
+          ["浮雕徽章", "把風景照片轉成浮雕徽章。請使用圓形構圖、立體邊框、金屬或陶土材質與地標細節。"],
+          ["手作紙雕", "把照片轉成手作紙雕場景。請使用分層紙張、柔和陰影與精緻剪紙邊緣。"],
+          ["地球小行星", "把風景或城市照片轉成小行星世界。請讓地面環成球形，人物與建築沿著星球自然排列。"],
+          ["遊戲像素", "把照片轉成復古電玩像素畫。請保留人物姿態與場景，加入 16-bit 色彩、遊戲介面與可玩感。"],
+          ["塔羅牌", "把人物照片轉成塔羅牌插畫。請加入象徵元素、牌名、精緻邊框與神秘色彩。"],
+          ["賽車現場", "把人物合成到 F1 賽車現場。請加入賽道、維修區、速度感背景與真實運動攝影光線。"],
+          ["籃球現場", "把人物合成到 NBA 球賽現場。請加入球場燈光、觀眾席、動態姿勢與體育攝影質感。"],
+          ["棒球現場", "把人物合成到職棒比賽現場。請加入球場草皮、看台、隊服元素與比賽瞬間氛圍。"],
+          ["偶像舞台", "把人物合成到偶像打歌舞台。請加入舞台燈、LED 背景、表演姿勢與高解析舞台攝影感。"]
+        ]
+      }
+    ];
+
+    const originalImages = new Map([
+      "社群貼文圖片|1", "YouTube 縮圖|2", "商品形象照|3", "EDM 主視覺|4", "吉祥物商品化|5", "活動海報|6", "社群輪播封面|7", "教學資訊圖|8", "Logo 概念|9", "社群模板|10", "策略資訊圖|11", "客戶見證卡|12", "限時優惠圖|13", "品牌故事圖|14",
+      "簡報封面|15", "公司介紹圖卡|16", "產品比較表|17", "FAQ 問答卡|18", "App Icon|19", "操作流程圖|20", "數據資訊圖|21", "工作 Checklist|22", "部落格首圖|23", "社群分享卡|24", "會議摘要圖|25", "年度目標圖|26", "專案時程圖|27", "流程 SOP|28",
+      "咖啡館菜單|29", "季節月曆|30", "旅行規劃表|31", "編織氣象圖|32", "讀書筆記|33", "時間管理圖|34", "美食插圖|35", "白邊手繪風|36", "習慣追蹤表|37", "房間收納圖|38", "購物清單圖|39", "運動菜單表|40", "料理步驟圖|41", "居家植物照護|42", "生日邀請卡|43",
+      "四格漫畫|44", "LINE 貼圖|45", "旅行日記|46", "黑膠封面|47", "漫畫封面|48", "奇幻書封|49", "復古雜誌|50", "時尚雜誌|51", "寵物拍照框|52", "黏土 Q 版|53", "精選動態封面|54", "扭蛋包裝|55", "桌遊卡牌|56", "貼紙包|57", "動畫分鏡|58",
+      "突破手機螢幕|59", "潑墨插畫|60", "角色設定海報|61", "穿搭分析|62", "電子寵物像素|63", "Q 版 3D 小人|64", "電影海報|65", "巨大與迷你人物|66", "極道風角色|67", "Y2K 大頭貼|68", "蠟筆手繪|69", "小畫家風|70", "手機桌布|71", "浮雕徽章|72", "手作紙雕|73", "地球小行星|74", "遊戲像素|75", "塔羅牌|76", "賽車現場|77", "籃球現場|78", "棒球現場|79", "偶像舞台|80"
+    ].map(item => item.split("|")));
+
+    const allPrompts = source.flatMap(group => group.prompts.map(item => ({
+      category: group.category,
+      title: item[0],
+      prompt: item[1],
+      imageNumber: item[2] || originalImages.get(item[0])
+    })));
+
+    const tabs = document.getElementById("tabs");
+    const grid = document.getElementById("grid");
+    const search = document.getElementById("search");
+    const resultCount = document.getElementById("resultCount");
+    const viewTitle = document.getElementById("viewTitle");
+    const empty = document.getElementById("empty");
+    const totalCount = document.getElementById("totalCount");
+    const categoryCount = document.getElementById("categoryCount");
+    const copyVisible = document.getElementById("copyVisible");
+    const clearSearch = document.getElementById("clearSearch");
+
+    let activeCategory = "全部";
+    let visible = allPrompts;
+
+    totalCount.textContent = allPrompts.length;
+    categoryCount.textContent = source.length;
+
+    function makeTabs() {
+      ["全部", ...source.map(group => group.category)].forEach(name => {
+        const button = document.createElement("button");
+        button.className = "tab";
+        button.type = "button";
+        button.textContent = name;
+        button.addEventListener("click", () => {
+          activeCategory = name;
+          render();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          document.querySelector("main").scrollTo({ top: 0, behavior: "smooth" });
+        });
+        tabs.appendChild(button);
+      });
+    }
+
+    function copyText(text, button) {
+      const done = () => {
+        const old = button.textContent;
+        button.textContent = "已複製";
+        button.classList.add("done");
+        setTimeout(() => {
+          button.textContent = old;
+          button.classList.remove("done");
+        }, 1200);
+      };
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done);
+        return;
+      }
+
+      const area = document.createElement("textarea");
+      area.value = text;
+      area.style.position = "fixed";
+      area.style.left = "-9999px";
+      document.body.appendChild(area);
+      area.focus();
+      area.select();
+      document.execCommand("copy");
+      document.body.removeChild(area);
+      done();
+    }
+
+    function render() {
+      const keyword = search.value.trim().toLowerCase();
+      visible = allPrompts.filter(item => {
+        const inCategory = activeCategory === "全部" || item.category === activeCategory;
+        const text = `${item.category} ${item.title} ${item.prompt}`.toLowerCase();
+        return inCategory && (!keyword || text.includes(keyword));
+      });
+
+      [...tabs.children].forEach(button => {
+        button.classList.toggle("active", button.textContent === activeCategory);
+      });
+
+      viewTitle.textContent = activeCategory === "全部" ? "全部提示詞" : activeCategory;
+      resultCount.textContent = `${visible.length} / ${allPrompts.length} 組`;
+      grid.innerHTML = "";
+      empty.style.display = visible.length ? "none" : "block";
+
+      visible.forEach(item => {
+        const imageNumber = String(item.imageNumber).padStart(2, "0");
+        const card = document.createElement("article");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="preview">
+            <img alt="" loading="lazy">
+          </div>
+          <div class="card-head">
+            <h3 class="title"></h3>
+            <span class="tag"></span>
+          </div>
+          <p class="prompt"></p>
+          <button class="copy" type="button">複製提示詞</button>
+        `;
+        card.querySelector("img").src = `prompt_images_exact/prompt_${imageNumber}.png`;
+        card.querySelector(".title").textContent = item.title;
+        card.querySelector(".tag").textContent = item.category;
+        card.querySelector(".prompt").textContent = item.prompt;
+        card.querySelector(".copy").addEventListener("click", event => {
+          copyText(item.prompt, event.currentTarget);
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    search.addEventListener("input", render);
+    clearSearch.addEventListener("click", () => {
+      search.value = "";
+      activeCategory = "全部";
+      render();
+      search.focus();
+    });
+    copyVisible.addEventListener("click", () => {
+      const text = visible.map(item => `${item.title}\n${item.prompt}`).join("\n\n");
+      if (text) copyText(text, copyVisible);
+    });
+
+    makeTabs();
+    render();
+  </script>
+  <div class="signature" aria-label="WHJ-Codex"><span>WHJ-Codex</span></div>
+</body>
+</html>
