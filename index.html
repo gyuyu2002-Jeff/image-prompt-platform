@@ -256,6 +256,41 @@
       font-size: 12px;
     }
 
+    .need-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 0 12px;
+    }
+
+    .need-tag {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #eef4f1;
+      color: #35675f;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .prompt-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .copy.alt {
+      background: #4f6677;
+    }
+
+    .copy.chatgpt {
+      background: #35675f;
+    }
+
+    .copy.gemini {
+      background: #3f7e9a;
+    }
+
     .copy {
       align-self: flex-start;
       min-width: 110px;
@@ -723,11 +758,71 @@
       return requirementGuide[title] || "請先準備主題、用途、尺寸比例、必要文字、風格參考與不能出現的元素。";
     }
 
+    function getNeedTags(title, category, requirements) {
+      const text = `${title} ${category} ${requirements}`;
+      const tags = [];
+      if (/照片|大頭照|人物|寵物|風景|房間|產品照片|全身照/.test(text)) tags.push("需上傳照片");
+      if (/產品|商品|外盒|配件|材質|電商/.test(text)) tags.push("需產品資料");
+      if (/文案|標題|主標|短文|口號|FAQ|問題|答案|書名|片名|牌名/.test(text)) tags.push("需提供文字");
+      if (/數據|指標|圖表|資料|比較|方案|價格|OKR|目標/.test(text)) tags.push("需提供資料");
+      if (/品牌|Logo|品牌色|字體|識別/.test(text)) tags.push("需品牌設定");
+      if (/日期|地點|時間|期限|月份|行程|活動/.test(text)) tags.push("需時間地點");
+      if (!tags.length) tags.push("可直接使用");
+      return [...new Set(tags)].slice(0, 4);
+    }
+
+    function createTemplatePrompt(item) {
+      return `請先把以下欄位補完整，再使用提示詞生成圖像：
+
+【主題/目的】：[請填入這張圖要達成的目的]
+【要提供的資料】：${item.requirements}
+【尺寸/平台】：[例如 Instagram 方形、YouTube 縮圖、簡報 16:9、手機桌布]
+【主體】：[人物/產品/品牌/場景/資料內容]
+【風格參考】：[想要的風格、色彩、材質、光線]
+【必須出現】：[不可缺少的元素]
+【避免出現】：[不要的元素、錯字、品牌 logo、浮水印等]
+
+生成提示詞：
+${item.prompt}`;
+    }
+
+    function createShortPrompt(item) {
+      return `${item.title}：${item.prompt.split("請依照以下完整規格生成：")[0].trim()}
+
+補充要求：畫面清楚、主體明確、構圖有層次、光線自然、避免亂碼文字、真實品牌 logo、浮水印與低解析。`;
+    }
+
+    function createPlatformPrompt(item, platform) {
+      const platformLine = platform === "Gemini"
+        ? "請先檢查我提供的資料是否足夠；若不足，請先列出缺少的資料，再根據已提供內容生成最接近需求的圖像提示詞。"
+        : "請先確認我提供的資料是否足夠；如果不足，先問我最多 3 個關鍵問題，再開始生成圖像。";
+
+      return `我要用 ${platform} 生成一張「${item.title}」圖像。
+
+${platformLine}
+
+使用前請準備：
+${item.requirements}
+
+我會提供的資料：
+- 主題/目的：[請填入]
+- 主體或素材：[請填入或上傳]
+- 尺寸/平台：[請填入]
+- 品牌/色彩/風格：[請填入]
+- 必須保留：[請填入]
+- 避免事項：[請填入]
+
+請依照以下提示詞生成，並保持畫面清楚、可商用、沒有亂碼文字：
+
+${item.prompt}`;
+    }
+
     const allPrompts = source.flatMap(group => group.prompts.map(item => ({
       category: group.category,
       title: item[0],
       prompt: expandPrompt(item[1], item[0], group.category),
       requirements: getRequirements(item[0], group.category),
+      needTags: getNeedTags(item[0], group.category, getRequirements(item[0], group.category)),
       imageNumber: item[2] || originalImages.get(item[0])
     })));
 
@@ -821,17 +916,37 @@
             <h3 class="title"></h3>
             <span class="tag"></span>
           </div>
+          <div class="need-tags"></div>
           <div class="requirements"><strong>使用前請準備</strong><span></span></div>
           <p class="prompt"></p>
-          <button class="copy" type="button">複製提示詞</button>
+          <div class="prompt-tabs">
+            <button class="copy alt short" type="button">複製精簡</button>
+            <button class="copy full" type="button">複製完整</button>
+            <button class="copy alt template" type="button">複製填空</button>
+            <button class="copy chatgpt" type="button">複製給 ChatGPT</button>
+            <button class="copy gemini" type="button">複製給 Gemini</button>
+          </div>
         `;
         card.querySelector("img").src = `prompt_images_exact/prompt_${imageNumber}.png`;
         card.querySelector(".title").textContent = item.title;
         card.querySelector(".tag").textContent = item.category;
+        card.querySelector(".need-tags").innerHTML = item.needTags.map(tag => `<span class="need-tag">${tag}</span>`).join("");
         card.querySelector(".requirements span").textContent = item.requirements;
         card.querySelector(".prompt").textContent = item.prompt;
-        card.querySelector(".copy").addEventListener("click", event => {
+        card.querySelector(".short").addEventListener("click", event => {
+          copyText(createShortPrompt(item), event.currentTarget);
+        });
+        card.querySelector(".full").addEventListener("click", event => {
           copyText(`使用前請準備：${item.requirements}\n\n${item.prompt}`, event.currentTarget);
+        });
+        card.querySelector(".template").addEventListener("click", event => {
+          copyText(createTemplatePrompt(item), event.currentTarget);
+        });
+        card.querySelector(".chatgpt").addEventListener("click", event => {
+          copyText(createPlatformPrompt(item, "ChatGPT"), event.currentTarget);
+        });
+        card.querySelector(".gemini").addEventListener("click", event => {
+          copyText(createPlatformPrompt(item, "Gemini"), event.currentTarget);
         });
         grid.appendChild(card);
       });
