@@ -783,6 +783,8 @@ ${item.requirements}
 ${item.prompt}`;
     }
 
+    const imageAssetVersion = "20260629-universal-copy";
+
     const allPrompts = source.flatMap(group => group.prompts.map(item => ({
       category: group.category,
       title: item[0],
@@ -890,7 +892,7 @@ ${item.prompt}`;
             <button class="copy universal" type="button">複製通用提示詞</button>
           </div>
         `;
-        card.querySelector("img").src = `prompt_images_exact/prompt_${imageNumber}.png`;
+        card.querySelector("img").src = `prompt_images_exact/prompt_${imageNumber}.png?v=${imageAssetVersion}`;
         card.querySelector(".title").textContent = item.title;
         card.querySelector(".tag").textContent = item.category;
         card.querySelector(".need-tags").innerHTML = item.needTags.map(tag => `<span class="need-tag">${tag}</span>`).join("");
