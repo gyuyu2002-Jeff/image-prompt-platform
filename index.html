@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>圖像提示詞平台</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <style>
     :root {
       --bg: #f7f8f3;
@@ -235,6 +236,24 @@
       color: #33382f;
       line-height: 1.72;
       font-size: 15px;
+    }
+
+    .requirements {
+      margin: 0 0 14px;
+      padding: 11px 12px;
+      border: 1px solid #e8dcc9;
+      border-radius: 8px;
+      background: #fff8ed;
+      color: #5f4a2f;
+      line-height: 1.55;
+      font-size: 13px;
+    }
+
+    .requirements strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #9b573f;
+      font-size: 12px;
     }
 
     .copy {
@@ -598,10 +617,117 @@
 6. 避免事項：不要出現真實品牌 logo、浮水印、錯誤手指、扭曲臉部、低解析、過度模糊、雜亂背景或與主題無關的物件。`;
     }
 
+    const requirementGuide = {
+      "社群貼文圖片": "主題、平台尺寸、想放的短文或標語、品牌色或風格參考。",
+      "YouTube 縮圖": "影片主題、要突出的關鍵字、目標觀眾、是否有人物照片或產品圖。",
+      "商品形象照": "產品照片或外觀描述、材質、品牌調性、希望呈現的使用情境。",
+      "EDM 主視覺": "活動或優惠內容、主標文案、產品圖、品牌色、CTA 文字。",
+      "吉祥物商品化": "角色圖或角色設定、商品類型、材質偏好、展示角度。",
+      "活動海報": "活動名稱、日期、地點、講者或主視覺元素、品牌色。",
+      "社群輪播封面": "輪播主題、頁數、第一頁標題、品牌版型或色彩。",
+      "教學資訊圖": "教學步驟、每步重點、目標讀者、必要圖示或工具名稱。",
+      "Logo 概念": "品牌名稱、產業、品牌個性、偏好風格、禁用元素。",
+      "社群模板": "品牌色、字體方向、常用貼文類型、Logo 或品牌識別。",
+      "策略資訊圖": "策略內容、分類架構、資料重點、希望呈現的商業結論。",
+      "客戶見證卡": "客戶評語、姓名或角色、評分、品牌來源與是否可露出照片。",
+      "限時優惠圖": "商品、優惠條件、期限、折扣或活動文案、CTA。",
+      "品牌故事圖": "品牌理念、創辦故事、核心產品、想傳達的情緒。",
+      "簡報封面": "簡報主題、公司或專案名稱、受眾、品牌色與標題文字。",
+      "公司介紹圖卡": "品牌理念、服務項目、核心特色、聯絡或官網資訊。",
+      "產品比較表": "比較項目、方案名稱、價格或差異、推薦方案。",
+      "FAQ 問答卡": "問題清單、每題答案、分類方式、使用場景。",
+      "App Icon": "App 類型、核心功能、品牌色、想使用的象徵圖形。",
+      "操作流程圖": "完整操作步驟、判斷條件、開始與完成狀態。",
+      "數據資訊圖": "原始數據、關鍵數字、想強調的結論、圖表類型。",
+      "工作 Checklist": "清單項目、分類、截止時間、是否需要負責人欄位。",
+      "部落格首圖": "文章標題、摘要、關鍵意象、網站風格。",
+      "社群分享卡": "要放大的核心句、來源名稱、作者或品牌資訊。",
+      "會議摘要圖": "會議決議、待辦事項、負責人、期限。",
+      "年度目標圖": "年度目標、關鍵成果、進度或優先順序。",
+      "專案時程圖": "階段、日期、里程碑、負責人與交付項目。",
+      "流程 SOP": "SOP 步驟、判斷點、例外情況、輸入與輸出。",
+      "咖啡館菜單": "品項、價格、分類、店名或菜單風格。",
+      "季節月曆": "年份、月份、節日或重要日期、想要的季節元素。",
+      "旅行規劃表": "目的地、天數、旅遊偏好、交通方式、必去景點。",
+      "編織氣象圖": "城市、日期、天氣、溫度、降雨機率與代表地景。",
+      "讀書筆記": "書名、章節重點、摘錄內容或要整理的主題。",
+      "時間管理圖": "一天時間分配、活動類別、顏色偏好。",
+      "美食插圖": "料理名稱、主要食材、風味、想呈現的餐具或背景。",
+      "白邊手繪風": "要轉換的照片、保留主體、偏好的日系手繪參考。",
+      "習慣追蹤表": "習慣項目、一週日期、追蹤方式、鼓勵語。",
+      "房間收納圖": "房間照片或平面配置、物品分類、收納目標。",
+      "購物清單圖": "採買項目、分類、是否需要數量或勾選欄。",
+      "運動菜單表": "一週訓練內容、部位、時間、強度與休息日。",
+      "料理步驟圖": "食譜步驟、食材、份量、完成品風格。",
+      "居家植物照護": "植物名稱、照護條件、澆水頻率、注意事項。",
+      "生日邀請卡": "壽星、日期、地點、主題、RSVP 方式。",
+      "四格漫畫": "故事情境、角色設定、四格劇情或結尾反轉。",
+      "LINE 貼圖": "角色設定、情緒清單、口頭禪或是否避免文字。",
+      "旅行日記": "目的地、路線、票券或照片素材、想記錄的片段。",
+      "黑膠封面": "樂團或音樂風格、專輯氛圍、主色調。",
+      "漫畫封面": "主角設定、故事類型、場景、標題或集數文字。",
+      "奇幻書封": "書名、世界觀、主角、場景與象徵元素。",
+      "復古雜誌": "雜誌主題、年代感、人物或照片素材、封面文案。",
+      "時尚雜誌": "人物照片、穿搭風格、城市背景、封面文案。",
+      "寵物拍照框": "寵物照片、想保留的表情、動作與背景。",
+      "黏土 Q 版": "角色照片或設定、服裝、配色與道具。",
+      "精選動態封面": "需要幾個分類、各分類名稱、品牌色與 icon 方向。",
+      "扭蛋包裝": "角色設定、商品名稱、包裝風格、陳列情境。",
+      "桌遊卡牌": "角色資料、能力值、技能、卡牌陣營或稀有度。",
+      "貼紙包": "貼紙主題、角色或物件清單、表情與風格。",
+      "動畫分鏡": "短故事內容、角色動作、鏡頭數與情緒變化。",
+      "突破手機螢幕": "清晰人物照片、社群貼文畫面風格、希望的動作姿勢。",
+      "潑墨插畫": "人物照片、保留特徵、想要的墨線或水彩強度。",
+      "角色設定海報": "人物照片、角色定位、服裝設定、世界觀資訊。",
+      "穿搭分析": "人物全身照、身形與膚色資訊、穿搭場合、風格偏好。",
+      "電子寵物像素": "照片或主體、場景互動、希望的復古機台風格。",
+      "Q 版 3D 小人": "人物照片、迷你分身要做的動作、場景背景。",
+      "電影海報": "人物照片、電影類型、片名、角色站位與氛圍。",
+      "巨大與迷你人物": "同一人物照片、互動動作、場景與比例關係。",
+      "極道風角色": "人物照片、服裝方向、街景或夜景氛圍。",
+      "Y2K 大頭貼": "人物照片、四種表情、貼紙元素與色彩偏好。",
+      "蠟筆手繪": "照片、保留輪廓與表情、想要的童趣程度。",
+      "小畫家風": "照片、保留主體、背景簡化方向。",
+      "手機桌布": "大頭照、手機比例、日期或小元件需求、背景色。",
+      "浮雕徽章": "風景照片、地標、材質偏好、徽章形狀。",
+      "手作紙雕": "照片或場景主題、前中後景元素、紙張色系。",
+      "地球小行星": "風景或城市照片、要保留的建築或人物。",
+      "遊戲像素": "人物或場景照片、遊戲類型、UI 元素需求。",
+      "塔羅牌": "人物照片、牌名、象徵元素、神秘色彩。",
+      "賽車現場": "人物照片、賽車場景位置、動作姿勢與光線方向。",
+      "籃球現場": "人物照片、球場位置、動態姿勢、服裝方向。",
+      "棒球現場": "人物照片、球場位置、比賽情境、隊服色彩。",
+      "偶像舞台": "人物照片、舞台風格、表演姿勢、燈光色彩。",
+      "電商主圖": "產品照片、尺寸比例、材質、背景色、商品賣點。",
+      "情境式商品照": "產品照片、使用者情境、場景、目標客群。",
+      "開箱平鋪圖": "產品、外盒、配件清單、想要的排列方式。",
+      "材質特寫": "產品或材質照片、要突出的紋理、光澤與細節。",
+      "節慶促銷海報": "節慶名稱、商品、優惠內容、品牌色、CTA。",
+      "字體海報": "主標文字、活動主題、色彩與排版風格。",
+      "電影感產品廣告": "產品照片、廣告情緒、光線、背景與材質需求。",
+      "3D Icon 組": "icon 清單、品牌色、材質、使用場景。",
+      "UI App 畫面": "App 功能、頁面內容、目標使用者、品牌色。",
+      "網站 Hero 區": "品牌或產品、主標文案、CTA、背景素材。",
+      "SaaS Dashboard": "指標項目、圖表類型、資料欄位與產品領域。",
+      "室內設計提案": "空間照片或平面圖、風格、家具需求、材質偏好。",
+      "建築概念渲染": "建築用途、基地環境、材質、樓層或造型方向。",
+      "角色一致性表": "角色設定、服裝、表情、比例與視角需求。",
+      "IP 周邊展示": "角色圖、要做的商品清單、包裝風格。",
+      "品牌貼紙包": "品牌元素、貼紙文案或圖示、色彩與使用情境。",
+      "無縫圖案": "圖案主題、元素清單、配色、用途如包裝或布料。",
+      "等距城市地圖": "城市或活動範圍、地標清單、路線與導覽用途。",
+      "玻璃擬態卡片": "資訊內容、背景風格、資料欄位與色彩方向。"
+    };
+
+    function getRequirements(title, category) {
+      return requirementGuide[title] || "請先準備主題、用途、尺寸比例、必要文字、風格參考與不能出現的元素。";
+    }
+
     const allPrompts = source.flatMap(group => group.prompts.map(item => ({
       category: group.category,
       title: item[0],
       prompt: expandPrompt(item[1], item[0], group.category),
+      requirements: getRequirements(item[0], group.category),
       imageNumber: item[2] || originalImages.get(item[0])
     })));
 
@@ -670,7 +796,7 @@
       const keyword = search.value.trim().toLowerCase();
       visible = allPrompts.filter(item => {
         const inCategory = activeCategory === "全部" || item.category === activeCategory;
-        const text = `${item.category} ${item.title} ${item.prompt}`.toLowerCase();
+        const text = `${item.category} ${item.title} ${item.requirements} ${item.prompt}`.toLowerCase();
         return inCategory && (!keyword || text.includes(keyword));
       });
 
@@ -695,15 +821,17 @@
             <h3 class="title"></h3>
             <span class="tag"></span>
           </div>
+          <div class="requirements"><strong>使用前請準備</strong><span></span></div>
           <p class="prompt"></p>
           <button class="copy" type="button">複製提示詞</button>
         `;
         card.querySelector("img").src = `prompt_images_exact/prompt_${imageNumber}.png`;
         card.querySelector(".title").textContent = item.title;
         card.querySelector(".tag").textContent = item.category;
+        card.querySelector(".requirements span").textContent = item.requirements;
         card.querySelector(".prompt").textContent = item.prompt;
         card.querySelector(".copy").addEventListener("click", event => {
-          copyText(item.prompt, event.currentTarget);
+          copyText(`使用前請準備：${item.requirements}\n\n${item.prompt}`, event.currentTarget);
         });
         grid.appendChild(card);
       });
@@ -717,7 +845,7 @@
       search.focus();
     });
     copyVisible.addEventListener("click", () => {
-      const text = visible.map(item => `${item.title}\n${item.prompt}`).join("\n\n");
+      const text = visible.map(item => `${item.title}\n使用前請準備：${item.requirements}\n\n${item.prompt}`).join("\n\n");
       if (text) copyText(text, copyVisible);
     });
 
