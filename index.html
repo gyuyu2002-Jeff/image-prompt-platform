@@ -93,22 +93,6 @@
       font-weight: 700;
     }
 
-    .search {
-      width: 100%;
-      min-height: 44px;
-      padding: 10px 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--panel);
-      color: var(--ink);
-      outline: none;
-    }
-
-    .search:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(53, 103, 95, .14);
-    }
-
     .tabs {
       display: grid;
       gap: 8px;
@@ -182,7 +166,7 @@
       display: flex;
       flex-direction: column;
       min-height: 250px;
-      padding: 18px;
+      padding: 14px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--panel);
@@ -192,7 +176,7 @@
     .preview {
       width: 100%;
       aspect-ratio: 1 / 1;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       border: 1px solid var(--line);
       border-radius: 8px;
       overflow: hidden;
@@ -211,7 +195,11 @@
       align-items: flex-start;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
+    }
+
+    .title-row {
+      min-width: 0;
     }
 
     .title {
@@ -220,8 +208,26 @@
       line-height: 1.35;
     }
 
-    .tag {
+    .favorite {
       flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: #879083;
+      cursor: pointer;
+    }
+
+    .favorite.active {
+      border-color: #d8a43b;
+      background: #fff6df;
+      color: #b27816;
+    }
+
+    .tag {
+      display: inline-flex;
+      margin-top: 7px;
       padding: 4px 8px;
       border-radius: 999px;
       background: var(--soft);
@@ -233,8 +239,15 @@
     .prompt {
       margin: 0 0 14px;
       color: #33382f;
-      line-height: 1.55;
+      line-height: 1.5;
       font-size: 14px;
+    }
+
+    .prompt strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--accent);
+      font-size: 12px;
     }
 
     .requirements {
@@ -259,7 +272,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin: 0 0 12px;
+      margin: 0 0 10px;
     }
 
     .need-tag {
@@ -273,6 +286,39 @@
 
     .prompt-tabs {
       margin-top: auto;
+    }
+
+    .recent-box {
+      display: none;
+      margin-top: 18px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    .recent-box strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .recent-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .recent-item {
+      min-height: 34px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcf8;
+      color: var(--ink);
+      text-align: left;
+      cursor: pointer;
+      font-size: 13px;
     }
 
     .copy {
@@ -345,8 +391,7 @@
     <aside>
       <h1>圖像提示詞平台</h1>
       <p class="source">
-        依用途分類整理的圖像提示詞模板，可搜尋、篩選並一鍵複製。參考來源：
-        <a href="https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete" target="_blank" rel="noreferrer">查看文章</a>
+        精選 99 種圖像提示詞，整理成 5 種分類；瀏覽參考圖後可一鍵複製完整提示詞。
       </p>
 
       <div class="stats">
@@ -354,15 +399,16 @@
         <div class="stat"><strong id="categoryCount">0</strong>分類</div>
       </div>
 
-      <label for="search">搜尋用途或關鍵字</label>
-      <input id="search" class="search" type="search" placeholder="例如：簡報、菜單、貼圖">
-
       <label>分類</label>
       <div id="tabs" class="tabs"></div>
 
       <div class="actions">
         <button id="copyVisible" class="primary" type="button">複製目前通用提示詞</button>
-        <button id="clearSearch" class="primary secondary" type="button">清除搜尋</button>
+      </div>
+
+      <div id="recentBox" class="recent-box">
+        <strong>最近複製</strong>
+        <div id="recentList" class="recent-list"></div>
       </div>
     </aside>
 
@@ -751,7 +797,7 @@
       if (/數據|指標|圖表|資料|比較|方案|價格|OKR|目標/.test(text)) tags.push("需提供資料");
       if (/品牌|Logo|品牌色|字體|識別/.test(text)) tags.push("需品牌設定");
       if (/日期|地點|時間|期限|月份|行程|活動/.test(text)) tags.push("需時間地點");
-      if (!tags.length) tags.push("可直接使用");
+      if (!tags.length) tags.push("少量補充");
       return [...new Set(tags)].slice(0, 4);
     }
 
@@ -760,6 +806,10 @@
       const summary = base.split("。")[0].trim();
       return `用途：${summary}。
 重點：${detail}`;
+    }
+
+    function createPurposeText(base) {
+      return base.split("。")[0].trim();
     }
 
     const supplementGuide = {
@@ -785,11 +835,16 @@ ${item.prompt}`;
 
     const imageAssetVersion = "20260629-universal-copy";
 
-    const allPrompts = source.flatMap(group => group.prompts.map(item => ({
+    const categoryOrder = ["工作應用", "品牌社群", "生活實用", "照片轉換", "靈感創作"];
+    const orderedSource = [...source].sort((a, b) => categoryOrder.indexOf(a.category) - categoryOrder.indexOf(b.category));
+
+    const allPrompts = orderedSource.flatMap(group => group.prompts.map(item => ({
+      id: `${group.category}|${item[0]}`,
       category: group.category,
       title: item[0],
       prompt: expandPrompt(item[1], item[0], group.category),
       displayPrompt: createDisplayPrompt(item[1], item[0], group.category),
+      purpose: createPurposeText(item[1]),
       requirements: getRequirements(item[0], group.category),
       needTags: getNeedTags(item[0], group.category, getRequirements(item[0], group.category)),
       imageNumber: item[2] || originalImages.get(item[0])
@@ -797,23 +852,25 @@ ${item.prompt}`;
 
     const tabs = document.getElementById("tabs");
     const grid = document.getElementById("grid");
-    const search = document.getElementById("search");
     const resultCount = document.getElementById("resultCount");
     const viewTitle = document.getElementById("viewTitle");
     const empty = document.getElementById("empty");
     const totalCount = document.getElementById("totalCount");
     const categoryCount = document.getElementById("categoryCount");
     const copyVisible = document.getElementById("copyVisible");
-    const clearSearch = document.getElementById("clearSearch");
+    const recentBox = document.getElementById("recentBox");
+    const recentList = document.getElementById("recentList");
 
     let activeCategory = "全部";
     let visible = allPrompts;
+    let favorites = new Set(JSON.parse(localStorage.getItem("imagePromptFavorites") || "[]"));
+    let recentIds = JSON.parse(localStorage.getItem("imagePromptRecent") || "[]");
 
     totalCount.textContent = allPrompts.length;
-    categoryCount.textContent = source.length;
+    categoryCount.textContent = orderedSource.length;
 
     function makeTabs() {
-      ["全部", ...source.map(group => group.category)].forEach(name => {
+      ["全部", ...orderedSource.map(group => group.category)].forEach(name => {
         const button = document.createElement("button");
         button.className = "tab";
         button.type = "button";
@@ -825,6 +882,34 @@ ${item.prompt}`;
           document.querySelector("main").scrollTo({ top: 0, behavior: "smooth" });
         });
         tabs.appendChild(button);
+      });
+    }
+
+    function saveFavorites() {
+      localStorage.setItem("imagePromptFavorites", JSON.stringify([...favorites]));
+    }
+
+    function addRecent(item) {
+      recentIds = [item.id, ...recentIds.filter(id => id !== item.id)].slice(0, 6);
+      localStorage.setItem("imagePromptRecent", JSON.stringify(recentIds));
+      updateRecentList();
+    }
+
+    function updateRecentList() {
+      const recentItems = recentIds.map(id => allPrompts.find(item => item.id === id)).filter(Boolean);
+      recentBox.style.display = recentItems.length ? "block" : "none";
+      recentList.innerHTML = "";
+      recentItems.forEach(item => {
+        const button = document.createElement("button");
+        button.className = "recent-item";
+        button.type = "button";
+        button.textContent = item.title;
+        button.addEventListener("click", () => {
+          activeCategory = item.category;
+          render();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+        recentList.appendChild(button);
       });
     }
 
@@ -857,11 +942,9 @@ ${item.prompt}`;
     }
 
     function render() {
-      const keyword = search.value.trim().toLowerCase();
       visible = allPrompts.filter(item => {
         const inCategory = activeCategory === "全部" || item.category === activeCategory;
-        const text = `${item.category} ${item.title} ${item.requirements} ${item.prompt}`.toLowerCase();
-        return inCategory && (!keyword || text.includes(keyword));
+        return inCategory;
       });
 
       [...tabs.children].forEach(button => {
@@ -882,12 +965,15 @@ ${item.prompt}`;
             <img alt="" loading="lazy">
           </div>
           <div class="card-head">
-            <h3 class="title"></h3>
-            <span class="tag"></span>
+            <div class="title-row">
+              <h3 class="title"></h3>
+              <span class="tag"></span>
+            </div>
+            <button class="favorite" type="button" aria-label="加入收藏"></button>
           </div>
           <div class="need-tags"></div>
-          <div class="requirements"><strong>使用前請準備</strong><span></span></div>
-          <p class="prompt"></p>
+          <p class="prompt"><strong>用途</strong><span></span></p>
+          <div class="requirements"><strong>補充提示</strong><span></span></div>
           <div class="prompt-tabs">
             <button class="copy universal" type="button">複製通用提示詞</button>
           </div>
@@ -896,22 +982,29 @@ ${item.prompt}`;
         card.querySelector(".title").textContent = item.title;
         card.querySelector(".tag").textContent = item.category;
         card.querySelector(".need-tags").innerHTML = item.needTags.map(tag => `<span class="need-tag">${tag}</span>`).join("");
+        card.querySelector(".prompt span").textContent = item.purpose;
         card.querySelector(".requirements span").textContent = item.requirements;
-        card.querySelector(".prompt").textContent = item.displayPrompt;
+        const favoriteButton = card.querySelector(".favorite");
+        favoriteButton.textContent = favorites.has(item.id) ? "★" : "☆";
+        favoriteButton.classList.toggle("active", favorites.has(item.id));
+        favoriteButton.addEventListener("click", () => {
+          if (favorites.has(item.id)) {
+            favorites.delete(item.id);
+          } else {
+            favorites.add(item.id);
+          }
+          saveFavorites();
+          render();
+        });
         card.querySelector(".universal").addEventListener("click", event => {
+          addRecent(item);
           copyText(createUniversalPrompt(item), event.currentTarget);
         });
         grid.appendChild(card);
       });
+      updateRecentList();
     }
 
-    search.addEventListener("input", render);
-    clearSearch.addEventListener("click", () => {
-      search.value = "";
-      activeCategory = "全部";
-      render();
-      search.focus();
-    });
     copyVisible.addEventListener("click", () => {
       const text = visible.map(item => createUniversalPrompt(item)).join("\n\n---\n\n");
       if (text) copyText(text, copyVisible);
